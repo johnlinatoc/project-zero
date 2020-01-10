@@ -69,9 +69,7 @@ ActiveRecord::Schema.define(version: 2020_01_07_191223) do
     t.float "total_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "shipping_id", null: false
     t.index ["account_id"], name: "index_orders_on_account_id"
-    t.index ["shipping_id"], name: "index_orders_on_shipping_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -102,7 +100,6 @@ ActiveRecord::Schema.define(version: 2020_01_07_191223) do
   add_foreign_key "billing_addresses", "accounts"
   add_foreign_key "contacts", "users"
   add_foreign_key "orders", "accounts"
-  add_foreign_key "orders", "shippings"
   add_foreign_key "orders", "users"
   add_foreign_key "shippings", "addresses"
   add_foreign_key "shippings", "events"

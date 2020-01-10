@@ -9,3 +9,4 @@
 john = User.create(first_name: 'John', last_name: 'Doe', email: '123@abc.com', password_digest: '1234')
 friend = Contact.create(user_id: john.id, name: 'Mary')
 account = Account.create(user_id: john.id, card_number: 1234, card_name: "John Doe", expiration_date: '2021-12-25')
+order = Order.create(user_id: john.id, account_id: account.id, total_amount: 123.45)
