@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  has_many :Contacts
+  has_many :contacts
 end
