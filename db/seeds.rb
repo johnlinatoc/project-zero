@@ -13,16 +13,27 @@ john = User.create(
   password_digest: '1234')
 friend = Contact.create(
   user_id: john.id,
-  name: 'Mary')
+  first_name: 'Mary',
+  last_name: 'Massie')
 address = Address.create(
-  contact_id: friend.id)
-shipping = Shipping.create(
-  address_id: address.id)
+  contact_id: friend.id,
+  address_1: "57 N. Baker",
+  address_2: "1 North",
+  phone_number: "743-909-0080")
 account = Account.create(
   user_id: john.id,
   card_number: 1234,
   card_name: "John Doe",
   expiration_date: '2021-12-25')
+billing = BillingAddress.create(
+  account_id: account.id,
+  address_1: '909 South Street',
+  address_2: 'Unit 8',
+  first_name: 'John',
+  last_name: 'Doe',
+  city: 'Chicago',
+  state: 'Illinois',
+  zipcode: 60001)
 event = Event.create(
   event_name: "birthday",
   delivery_date: '2020-01-30',
@@ -33,5 +44,6 @@ event = Event.create(
 order = Order.create(
   user_id: john.id,
   account_id: account.id,
+  event_id: event.id,
   total_amount: 123.45,
   event_id: event.id)

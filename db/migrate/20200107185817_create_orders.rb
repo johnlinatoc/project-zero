@@ -3,6 +3,7 @@ class CreateOrders < ActiveRecord::Migration[6.0]
     create_table :orders do |t|
       t.references :user, null: false, foreign_key: true
       t.references :account, null: false, foreign_key: true
+      t.references :event, null: false, foreign_key: true
       t.float :total_amount
 
       t.timestamps
