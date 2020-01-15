@@ -6,7 +6,32 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
   # Character.create(name: 'Luke', movie: movies.first)
 
-john = User.create(first_name: 'John', last_name: 'Doe', email: '123@abc.com', password_digest: '1234')
-friend = Contact.create(user_id: john.id, name: 'Mary')
-account = Account.create(user_id: john.id, card_number: 1234, card_name: "John Doe", expiration_date: '2021-12-25')
-order = Order.create(user_id: john.id, account_id: account.id, total_amount: 123.45)
+john = User.create(
+  first_name: 'John',
+  last_name: 'Doe',
+  email: '123@abc.com',
+  password_digest: '1234')
+friend = Contact.create(
+  user_id: john.id,
+  name: 'Mary')
+address = Address.create(
+  contact_id: friend.id)
+shipping = Shipping.create(
+  address_id: address.id)
+account = Account.create(
+  user_id: john.id,
+  card_number: 1234,
+  card_name: "John Doe",
+  expiration_date: '2021-12-25')
+event = Event.create(
+  event_name: "birthday",
+  delivery_date: '2020-01-30',
+  status: 0,
+  user_id: john.id,
+  contact_id: friend.id,
+  shipping_charge: 5.19)
+order = Order.create(
+  user_id: john.id,
+  account_id: account.id,
+  total_amount: 123.45,
+  event_id: event.id)

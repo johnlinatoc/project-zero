@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_191223) do
+ActiveRecord::Schema.define(version: 2020_01_14_235544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,12 +55,16 @@ ActiveRecord::Schema.define(version: 2020_01_07_191223) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "name"
+    t.string "event_name"
     t.date "delivery_date"
-    t.string "type"
     t.integer "status"
+    t.float "shipping_charge"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "contact_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["contact_id"], name: "index_events_on_contact_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -69,21 +73,19 @@ ActiveRecord::Schema.define(version: 2020_01_07_191223) do
     t.float "total_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "event_id", null: false
     t.index ["account_id"], name: "index_orders_on_account_id"
+    t.index ["event_id"], name: "index_orders_on_event_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "shippings", force: :cascade do |t|
-    t.bigint "order_id", null: false
     t.bigint "address_id", null: false
-    t.bigint "event_id", null: false
     t.float "shipping_charge"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["address_id"], name: "index_shippings_on_address_id"
-    t.index ["event_id"], name: "index_shippings_on_event_id"
-    t.index ["order_id"], name: "index_shippings_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,9 +101,10 @@ ActiveRecord::Schema.define(version: 2020_01_07_191223) do
   add_foreign_key "addresses", "contacts"
   add_foreign_key "billing_addresses", "accounts"
   add_foreign_key "contacts", "users"
+  add_foreign_key "events", "contacts"
+  add_foreign_key "events", "users"
   add_foreign_key "orders", "accounts"
+  add_foreign_key "orders", "events"
   add_foreign_key "orders", "users"
   add_foreign_key "shippings", "addresses"
-  add_foreign_key "shippings", "events"
-  add_foreign_key "shippings", "orders"
 end
